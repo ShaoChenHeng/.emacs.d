@@ -9,6 +9,7 @@
 (require 'init-package)
 (require 'init-scheme)
 (require 'init-paredit)
+(require 'init-action)
 
 ;; eaf
 (add-to-list 'load-path "~/.emacs.d/site-lisp/emacs-application-framework/")

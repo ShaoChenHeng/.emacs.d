@@ -3,7 +3,7 @@
 ;; init(load-theme 'gruvbox-dark-soft t))
 
 ;; use monokai
-(load-theme 'monokai-pro t) ;; or (load-theme 'monokai-pro t)
+(load-theme 'monokai t) ;; or (load-theme 'monokai-pro t)
 
 ;; an elegent mode-line
 (use-package smart-mode-line
@@ -20,4 +20,8 @@
 (add-to-list 'default-frame-alist (cons 'alpha (list 85 60)))
 (put 'downcase-region 'disabled nil)
 
+;; hight current line
+(use-package hl-line
+  :ensure nil
+  :hook (after-init . global-hl-line-mode))
 (provide 'init-ui)
