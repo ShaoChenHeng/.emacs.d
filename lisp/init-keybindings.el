@@ -10,5 +10,8 @@
 ;; many cursors (just like sublime cursor)
 (global-set-key (kbd "M-s e") 'iedit-mode)
 
+;; move code up or down
+(global-set-key [M-up] 'move-text-up)
+(global-set-key [M-down] 'move-text-down)
 
 (provide 'init-keybindings)

@@ -47,4 +47,41 @@
 	     (ignore-errors (backward-up-list))
 	     (funcall fn)))))
 
+;; Smooth Scrolling
+;; Vertical Scroll
+(setq scroll-step 1)
+(setq scroll-margin 1)
+(setq scroll-conservatively 101)
+(setq scroll-up-aggressively 0.01)
+(setq scroll-down-aggressively 0.01)
+(setq auto-window-vscroll nil)
+(setq fast-but-imprecise-scrolling nil)
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
+(setq mouse-wheel-progressive-speed nil)
+;; Horizontal Scroll
+(setq hscroll-step 1)
+(setq hscroll-margin 1)
+
+;; Title Bar
+(setq-default frame-title-format '("M-EMACS - " user-login-name "@" system-name " - %b"))
+
+;; Modeline Time and Battery
+(display-time-mode 1)
+(display-battery-mode 1)
+
+;; pretty symbols
+(global-prettify-symbols-mode 1)
+(defun add-pretty-lambda ()
+  "Make some word or string show as pretty Unicode symbols.  See https://unicodelookup.com for more."
+  (setq prettify-symbols-alist
+        '(("lambda" . 955)
+          ("delta" . 120517)
+          ("epsilon" . 120518)
+          ("->" . 8594)
+          ("<=" . 8804)
+          (">=" . 8805))))
+(add-hook 'prog-mode-hook 'add-pretty-lambda)
+(add-hook 'org-mode-hook 'add-pretty-lambda)
+
+
 (provide 'init-ui)

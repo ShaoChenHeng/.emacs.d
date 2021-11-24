@@ -21,4 +21,9 @@
 ;; scheme 语法高亮
 ;; (require 'parentesis)
 
+;; Load Private File
+;; Load init-private.el if it exists
+;; (when (file-exists-p (expand-file-name "init-private.el" user-emacs-directory))
+;;  (load-file (expand-file-name "init-private.el" user-emacs-directory)))
+
 (provide 'init-startup)

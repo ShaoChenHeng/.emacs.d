@@ -11,11 +11,14 @@
 (require 'init-paredit)
 (require 'init-action)
 (require 'init-keybindings)
+(require 'init-func)
+(require 'init-terminal)
 
+(require 'init-dashboard)
 (require 'init-eaf)
 (require 'init-pair)
 
-;; use org-mode control .emcs.d
+;; use org-mode control .emacs.d
 
 ;; (require 'org-install)
 ;; (require 'ob-tangle)

@@ -6,7 +6,7 @@
  '(custom-safe-themes
    '("c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" default))
  '(package-selected-packages
-   '(iedit expand-region counsel smart-mode-line monokai-theme restart-emacs use-package)))
+   '(projectile emojify smart-mode-line monokai-theme restart-emacs use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

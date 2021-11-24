@@ -1,0 +1,3 @@
+[submodule "site-lisp/emacs-dashboard"]
+	path = site-lisp/emacs-dashboard
+	url = https://github.com/emacs-dashboard/emacs-dashboard.git
