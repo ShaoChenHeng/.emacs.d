@@ -3,7 +3,7 @@
 ;;;;;;;;;;;;
 
 (require 'cmuscheme)
-(setq scheme-program-name "racket")         ;; 如果用 Petite 就改成 "petite"
+(setq scheme-program-name "chez-scheme")         ;; 如果用 Petite 就改成 "petite"
 ;; bypass the interactive question and start the default interpreter
 (defun scheme-proc ()
   "Return the current Scheme process, starting one if necessary."
