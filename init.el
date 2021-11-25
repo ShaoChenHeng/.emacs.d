@@ -13,6 +13,7 @@
 (require 'init-keybindings)
 (require 'init-func)
 (require 'init-terminal)
+(require 'init-programming)
 
 (require 'init-dashboard)
 (require 'init-eaf)

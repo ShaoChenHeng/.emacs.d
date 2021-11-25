@@ -1,4 +1,5 @@
 ;; 这一行代码，将函数 open-init-file 绑定到 <f2> 键上
+
 (global-set-key (kbd "<f2>") 'open-init-file)
 
 ;; swap 2-indent or 4-indent
@@ -13,5 +14,13 @@
 ;; move code up or down
 (global-set-key [M-up] 'move-text-up)
 (global-set-key [M-down] 'move-text-down)
+
+;; quickrun
+(use-package quickrun
+  :bind
+  (("<f5>" . quickrun)
+   ("M-<f5>" . quickrun-shell)
+   ("C-c e" . quickrun)
+   ("C-c C-e" . quickrun-shell)))
 
 (provide 'init-keybindings)

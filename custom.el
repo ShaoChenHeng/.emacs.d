@@ -6,11 +6,13 @@
  '(custom-safe-themes
    '("c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" default))
  '(package-selected-packages
-   '(projectile emojify smart-mode-line monokai-theme restart-emacs use-package)))
+   '(lsp-pyright smart-mode-line monokai-theme restart-emacs use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(flycheck-posframe-face ((t (:foreground "#a9dc76"))))
+ '(flycheck-posframe-info-face ((t (:foreground "#a9dc76"))))
  '(region ((t (:inhert (highlight default) :extend t :background "RoyalBlue1")))))
 
