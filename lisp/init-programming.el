@@ -118,4 +118,36 @@
   :custom
   (lsp-pyright-multi-root nil))
 
+;; js2-mode
+(use-package js2-mode
+  :mode "\\.js\\'"
+  :interpreter "node")
+
+;; vue-mode
+(use-package vue-mode
+  :mode "\\.vue\\'"
+  :commands (vue-mode)
+  :config
+  (setq mmm-submode-decoration-level 0)
+  :custom
+  (vue-js-indent-offset 2))
+
+;; indent set
+(setq custom-tab-width 4)
+
+;; (setq-default python-indent-offset custom-tab-width)
+;; (setq-default vue-indent-offset 2)
+;; (setq-default electric-indent-inhibit t)
+
+;;web-mode
+(use-package web-mode
+  :custom-face
+  (css-selector ((t (:inherit default :foreground "#66CCFF"))))
+  (font-lock-comment-face ((t (:foreground "#828282"))))
+  :mode
+  ("\\.phtml\\'" "\\.tpl\\.php\\'" "\\.[agj]sp\\'" "\\.as[cp]x\\'"
+   "\\.erb\\'" "\\.mustache\\'" "\\.djhtml\\'" "\\.[t]?html?\\'"))
+
+
+
 (provide 'init-programming)

@@ -16,9 +16,9 @@
 (global-linum-mode t)
 
 ;; make the background transparent
-(set-frame-parameter (selected-frame) 'alpha (list 85 60))
-(add-to-list 'default-frame-alist (cons 'alpha (list 85 60)))
-(put 'downcase-region 'disabled nil)
+;; (set-frame-parameter (selected-frame) 'alpha (list 85 60))
+;; (add-to-list 'default-frame-alist (cons 'alpha (list 85 60)))
+;; (put 'downcase-region 'disabled nil)
 
 ;; hight current line
 (use-package hl-line
@@ -27,6 +27,17 @@
 
 ;; font
 (set-face-attribute 'default nil :height 100)
+
+(defun set-font (english chinese english-size chinese-size)
+  (set-face-attribute 'default nil :font
+                      ;; (format   "%s:pixelsize=%d"  english english-size) :weight 'semi-bold)
+                      (format   "%s:pixelsize=%d"  english english-size))
+
+  (dolist (charset '(kana han symbol cjk-misc bopomofo))
+    (set-fontset-font (frame-parameter nil 'font) charset
+                      (font-spec :family chinese :size chinese-size :weight 'medium))))
+
+(set-font "Hack" "Hack" 20 20)
 
 ;; slim cursor
 (setq-default cursor-type 'bar)
@@ -63,7 +74,7 @@
 (setq hscroll-margin 1)
 
 ;; Title Bar
-(setq-default frame-title-format '("M-EMACS - " user-login-name "@" system-name " - %b"))
+(setq-default frame-title-format '("EMACS - " user-login-name "@" system-name " - %b"))
 
 ;; Modeline Time and Battery
 (display-time-mode 1)

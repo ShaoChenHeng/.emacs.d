@@ -103,4 +103,10 @@
 (global-set-key [M-up] 'move-text-up)
 (global-set-key [M-down] 'move-text-down)
 
+(add-to-list 'load-path "~/.emacs.d/site-lisp/one-key/")
+(require 'one-key)
+
+(add-to-list 'load-path "~/.emacs.d/site-lisp/lazy-load/")
+(require 'lazy-load)
+
 (provide 'init-action)

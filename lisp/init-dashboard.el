@@ -60,7 +60,7 @@
            "Configuration" "" (lambda (&rest _) (edit-configs)))
           (,(all-the-icons-faicon "cogs" :height 1.0 :v-adjust -0.1)
            "Update" "" (lambda (&rest _) (auto-package-update-now)))))
-     `((("" "M-EMACS" "Browse M-EMACS Homepage"
+     `((("" "EMACS" "Browse EMACS Homepage"
          (lambda (&rest _) (browse-url "https://github.com/shaochenheng")))
         ("" "Configuration" "" (lambda (&rest _) (edit-configs)))
         ("" "Update" "" (lambda (&rest _) (auto-package-update-now)))))))

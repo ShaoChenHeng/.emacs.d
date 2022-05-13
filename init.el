@@ -18,6 +18,9 @@
 (require 'init-dashboard)
 (require 'init-eaf)
 (require 'init-pair)
+(require 'init-sort-tab)
+
+(require 'init-company-english)
 
 ;; use org-mode control .emacs.d
 
