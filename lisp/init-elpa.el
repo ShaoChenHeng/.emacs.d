@@ -1,7 +1,8 @@
 ;; add tinghua resource
 (setq package-archives '(("gnu"   . "http://mirrors.cloud.tencent.com/elpa/gnu/")
-        ("melpa" . "http://mirrors.cloud.tencent.com/elpa/melpa/")
-        ("cselpa" . "https://elpa.thecybershadow.net/packages/")))
+                         ("melpa" . "http://mirrors.cloud.tencent.com/elpa/melpa/")
+                         ;;("melpa" . "https://melpa.org/packages/")
+                         ("cselpa" . "https://elpa.thecybershadow.net/packages/")))
 
 (package-initialize) ;; You might already have this line
 

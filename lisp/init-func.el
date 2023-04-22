@@ -18,6 +18,6 @@
 
 ;; a package for selecting windows to switch to.
 (use-package ace-window
-  :bind ("C-x C-o" . ace-window))
+  :bind ("C-x C-g" . ace-window))
 
 (provide 'init-func)

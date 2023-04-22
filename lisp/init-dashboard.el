@@ -16,9 +16,20 @@
 ;; Set the banner
 
 (setq dashboard-startup-banner
-      (concat "/home/scheng/.emacs.d/dashboardPic/nico/nico"
-	      (number-to-string (+ (% (caddr (current-time)) 6) 1))
+      (concat "/home/scheng/.emacs.d/dashboardPic/pic/p"
+	      (number-to-string (+ (% (caddr (current-time)) 23) 1))
 	      ".png"))
+ 
+ 
+(if (= (% (caddr (current-time)) 2) 0)
+    (setq dashboard-startup-banner
+          (concat "/home/scheng/.emacs.d/dashboardPic/pic/p"
+	                (number-to-string (+ (% (caddr (current-time)) 23) 1))
+	                ".png"))
+  (setq dashboard-startup-banner
+        (concat "/home/scheng/.emacs.d/dashboardPic/gif/"
+	              (number-to-string (+ (% (caddr (current-time)) 19) 1))
+	              ".gif")))
 
 ;; Value can be
 ;; 'official which displays the official emacs logo

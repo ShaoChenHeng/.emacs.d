@@ -1,25 +1,8 @@
 ;; YASnippet, a programming template system for Emacs. It loads YASnippet Snippets, a collection of yasnippet snippets for many languages.
-(use-package yasnippet
-  :diminish yas-minor-mode
-  :init
-  (use-package yasnippet-snippets :after yasnippet)
-  :hook ((prog-mode LaTeX-mode org-mode) . yas-minor-mode)
-  :bind
-  (:map yas-minor-mode-map ("C-c C-n" . yas-expand-from-trigger-key))
-  (:map yas-keymap
-        (("TAB" . smarter-yas-expand-next-field)
-         ([(tab)] . smarter-yas-expand-next-field)))
-  :config
-  (yas-reload-all)
-  (defun smarter-yas-expand-next-field ()
-    "Try to `yas-expand' then `yas-next-field' at current cursor position."
-    (interactive)
-    (let ((old-point (point))
-          (old-tick (buffer-chars-modified-tick)))
-      (yas-expand)
-      (when (and (eq old-point (point))
-                 (eq old-tick (buffer-chars-modified-tick)))
-        (ignore-errors (yas-next-field))))))
+(add-to-list 'load-path
+             "~/.emacs.d/site-lisp/yasnippet")
+(require 'yasnippet)
+(yas-global-mode 1)
 
 ;; Flycheck, a syntax checking extension.
 (use-package flycheck
@@ -121,7 +104,10 @@
 ;; js2-mode
 (use-package js2-mode
   :mode "\\.js\\'"
-  :interpreter "node")
+  :interpreter "node"
+  :config
+  (setq tab-width 2)
+  (setq indent-tabs-mode nil))
 
 ;; vue-mode
 (use-package vue-mode
@@ -130,10 +116,25 @@
   :config
   (setq mmm-submode-decoration-level 0)
   :custom
+  (setq tab-width 2)
+  (setq indent-tabs-mode nil)
   (vue-js-indent-offset 2))
 
+;; web-mode
+(use-package web-mode
+  :mode ("\\.vue\\'" "\\.wxml\\'")
+  :config
+  ;; 这里就是设置一下缩进为2个空格
+  (setq web-mode-indent-level 2)
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  (setq web-mode-code-indent-offset 2))
+
+
 ;; indent set
-(setq custom-tab-width 4)
+;; (setq custom-tab-width 2)
+(setq-default  tab-width 2) ;; 表示一个 tab 4个字符宽
+(setq-default indent-tabs-mode nil) ;; nil 表示将 tab 替换成空格
 
 ;; (setq-default python-indent-offset custom-tab-width)
 ;; (setq-default vue-indent-offset 2)
@@ -148,6 +149,14 @@
   ("\\.phtml\\'" "\\.tpl\\.php\\'" "\\.[agj]sp\\'" "\\.as[cp]x\\'"
    "\\.erb\\'" "\\.mustache\\'" "\\.djhtml\\'" "\\.[t]?html?\\'"))
 
+;; lsp-bridge
+(add-to-list 'load-path "~/.emacs.d/site-lisp/lsp-bridge")
+
+(require 'yasnippet)
+(yas-global-mode 1)
+
+(require 'lsp-bridge)
+(global-lsp-bridge-mode)
 
 
 (provide 'init-programming)

@@ -15,6 +15,9 @@
 (global-set-key [M-up] 'move-text-up)
 (global-set-key [M-down] 'move-text-down)
 
+;; restart emacs
+(global-set-key (kbd "C-x M-c") 'restart-emacs)
+
 ;; quickrun
 (use-package quickrun
   :bind
