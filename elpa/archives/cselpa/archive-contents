@@ -1,2 +1,0 @@
-
-(1 (term-keys . [(20210928 932) ((emacs (24 3))) "Lossless keyboard input in a terminal emulator" tar ((:commit . "4a69f147082dbcfb998f1fa13f5bc07c0af3aafd") (:keywords "terminals") (:authors ("Vladimir Panteleev")) (:maintainer "Vladimir Panteleev") (:url . "https://github.com/CyberShadow/term-keys"))]))
