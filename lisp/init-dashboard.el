@@ -1,19 +1,80 @@
-(add-to-list 'load-path "~/.emacs.d/site-lisp/emacs-dashboard")
-(require 'dashboard)
+;; use all-the-icons
+(use-package all-the-icons
+  :ensure t
+  :if (display-graphic-p)  ; 仅在图形界面启用
+  :config
+  (unless (find-font (font-spec :name "all-the-icons"))
+    (all-the-icons-install-fonts))); 自动安装字体  
+(unless (fboundp 'linum-mode)
+  (defalias 'linum-mode 'display-line-numbers-mode))
+;; 启用 Dashboard
+(use-package dashboard
+  :ensure t
+  :config
+  (add-hook 'elpaca-after-init-hook #'dashboard-insert-startupify-lists)
+  (add-hook 'elpaca-after-init-hook #'dashboard-initialize)
+  (dashboard-setup-startup-hook); 设置 Dashboard 为启动画面
+  (add-hook 'dashboard-mode-hook (lambda () 
+                                   (display-line-numbers-mode -1)))
+  :custom
+  (dashboard-center-content t)
+  (dashboard-banner-logo-title "Hello  World !")
+  (initial-buffer-choice (lambda () (get-buffer dashboard-buffer-name)))
 
-(add-to-list 'load-path "~/.emacs.d/site-lisp/all-the-icons.el")
-(require 'all-the-icons)
+  ;; 启用 Dashboard 图标
+  (dashboard-set-heading-icons t)  ; 标题图标
+  (dashboard-set-file-icons t)     ; 文件图标
+  (dashboard-set-navigator t)      ; 底部导航栏
+  (dashboard-items '((recents   . 10)  ; 显示最近 10 个文件
+                          (bookmarks . 5)   ; 显示 5 个书签
+                          (projects  . 5))) ; 显示 5 个项目
 
-(add-to-list 'load-path "~/.emacs.d/site-lisp/page-break-lines")
-(require 'page-break-lines)
+  ;; set .emacs.d github button
+  (dashboard-navigator-buttons
+	(if (featurep 'all-the-icons)
+	    `(((,(all-the-icons-octicon "mark-github" :height 1.1 :v-adjust -0.05)
+		"My Emacs"
+		 "Browse My EMACS Homepage"
+		(lambda (&rest _) (browse-url "https://github.com/shaochenheng/.emacs.d")))
+               (,(all-the-icons-fileicon "elisp" :height 1.0 :v-adjust -0.1)
+		"Configuration"
+		"" (lambda (&rest _) (edit-configs)))
+               (,(all-the-icons-faicon "cogs" :height 1.0 :v-adjust -0.1)
+		"Update" "" (lambda (&rest _) (auto-package-update-now)))))
+	  `((("" "My Emacs"
+              (lambda (&rest _) (browse-url "https://github.com/shaochenheng/.emacs.d")))
+             ("" "Configuration" "" (lambda (&rest _) (edit-configs)))
+             ("" "Update" "" (lambda (&rest _) (auto-package-update-now)))))))
 
-(add-to-list 'load-path "~/.emacs.d/site-lisp/projectile")
-(require 'projectile)
+  :custom-face
 
-(dashboard-setup-startup-hook)
-;; Set the title
-(setq dashboard-banner-logo-title "Hello World!")
+  (dashboard-banner-logo-title ((t (:family "eva"
+					    :height 1.9
+					    :weight regular))))
+
+
+)
+
+(dashboard-modify-heading-icons '((recents   . "file-text")
+                                  (bookmarks . "book")))
+
+(setq dashboard-startupify-list '(dashboard-insert-banner
+                                  dashboard-insert-newline
+                                  dashboard-insert-banner-title
+                                  dashboard-insert-newline
+                                  dashboard-insert-navigator
+                                  dashboard-insert-newline
+                                  dashboard-insert-init-info
+                                  dashboard-insert-items
+                                  dashboard-insert-newline
+                                  dashboard-insert-footer))
+
 ;; Set the banner
+;; Value can be
+;; 'official which displays the official emacs logo
+;; 'logo which displays an alternative emacs logo
+;; 1, 2 or 3 which displays one of the text banners
+;; "path/to/your/image.gif", "path/to/your/image.png" or "path/to/your/text.txt" which displays whatever gif/image/text you would prefer
 
 (setq dashboard-startup-banner
       (concat "/home/scheng/.emacs.d/dashboardPic/pic/p"
@@ -31,61 +92,11 @@
 	              (number-to-string (+ (% (caddr (current-time)) 19) 1))
 	              ".gif")))
 
-;; Value can be
-;; 'official which displays the official emacs logo
-;; 'logo which displays an alternative emacs logo
-;; 1, 2 or 3 which displays one of the text banners
-;; "path/to/your/image.gif", "path/to/your/image.png" or "path/to/your/text.txt" which displays whatever gif/image/text you would prefer
+;; 如果是终端环境，禁用图标
+(unless (display-graphic-p)
+  (setq dashboard-set-file-icons nil)
+  (setq dashboard-set-heading-icons nil))
 
-;; Content is not centered by default. To center, set
-(setq dashboard-center-content t)
 
-;; To disable shortcut "jump" indicators for each section, set
-(setq dashboard-show-shortcuts nil)
-
-(setq dashboard-items '((recents  . 10)
-                        ))
-(defun dashboard-insert-custom (list-size))
-(add-to-list 'dashboard-item-generators  '(custom . dashboard-insert-custom))
-(add-to-list 'dashboard-items '(custom) t)
-
-(setq dashboard-item-names '(("Recent Files:" . "Recently opened files:")
-                             ("Agenda for today:" . "Today's agenda:")
-                             ("Agenda for the coming week:" . "Agenda:")))
-
-(setq dashboard-set-heading-icons t)
-(setq dashboard-set-file-icons t)
-
-(dashboard-modify-heading-icons '((recents . "file-text")
-                                  (bookmarks . "book")))
-
-(setq dashboard-set-navigator t)
-
-;; Format: "(icon title help action face prefix suffix)"
-(setq dashboard-navigator-buttons
-   (if (featurep 'all-the-icons)
-       `(((,(all-the-icons-octicon "mark-github" :height 1.1 :v-adjust -0.05)
-           "GitHub" "Browse GitHub Homepage"
-           (lambda (&rest _) (browse-url "https://github.com/shaochenheng")))
-          (,(all-the-icons-fileicon "elisp" :height 1.0 :v-adjust -0.1)
-           "Configuration" "" (lambda (&rest _) (edit-configs)))
-          (,(all-the-icons-faicon "cogs" :height 1.0 :v-adjust -0.1)
-           "Update" "" (lambda (&rest _) (auto-package-update-now)))))
-     `((("" "EMACS" "Browse EMACS Homepage"
-         (lambda (&rest _) (browse-url "https://github.com/shaochenheng")))
-        ("" "Configuration" "" (lambda (&rest _) (edit-configs)))
-        ("" "Update" "" (lambda (&rest _) (auto-package-update-now)))))))
-
-(setq dashboard-set-init-info t)
-
-(setq dashboard-init-info "It all returns to nothing.")
-
-(setq dashboard-set-footer nil)
-
-(setq dashboard-footer-messages '("Hello World!"))
-(setq dashboard-footer-icon (all-the-icons-octicon "dashboard"
-                                                   :height 1.1
-                                                   :v-adjust -0.05
-                                                   :face 'font-lock-keyword-face))
 
 (provide 'init-dashboard)
