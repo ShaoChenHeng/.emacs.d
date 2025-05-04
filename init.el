@@ -3,29 +3,21 @@
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
-(require 'init-startup)
-(require 'init-elpa)
 (require 'init-ui)
-(require 'init-package)
-(require 'init-scheme)
-(require 'init-paredit)
-(require 'init-action)
-(require 'init-keybindings)
-(require 'init-func)
-(require 'init-terminal)
-(require 'init-programming)
-
+(require 'init-packages)
+(require 'init-kaomoji-title-bar)
+(require 'init-aweshell)
+(require 'init-lsp-bridge)
+(require 'init-transient)
+(require 'init-aidermacs)
+(require 'init-editing)
+(require 'init-magit)
 (require 'init-dashboard)
-(require 'init-eaf)
 (require 'init-pair)
 (require 'init-sort-tab)
-
-(require 'init-company-english)
-
-;; use org-mode control .emacs.d
-
-;; (require 'org-install)
-;; (require 'ob-tangle)
-;; (org-babel-load-file (expand-file-name "org-file-name.org" user-emacs-directory))
+(require 'init-doom-modeline)
+(require 'init-treemacs)
+(require 'init-ace-window)
+(require 'init-alpha)
 
 
