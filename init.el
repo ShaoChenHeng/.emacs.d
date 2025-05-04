@@ -13,11 +13,10 @@
 (require 'init-editing)
 (require 'init-magit)
 (require 'init-dashboard)
-(require 'init-pair)
+(require 'init-awesome-pair)
 (require 'init-sort-tab)
 (require 'init-doom-modeline)
 (require 'init-treemacs)
 (require 'init-ace-window)
 (require 'init-alpha)
-
 
