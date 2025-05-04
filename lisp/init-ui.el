@@ -32,13 +32,13 @@
   (set-face-attribute 'default nil
                       :family "monego"   ; font name
                       :weight 'regular   ; regular or bold
-                      :height 200)       ; font size
+                      :height 180)       ; font size
 
   ;; 设置中文字体（覆盖CJK字符集）
   (dolist (charset '(kana han cjk-misc bopomofo))
     (set-fontset-font t charset
                       (font-spec :family "LXGW WenKai"   ; 霞鹜文楷
-                                 :size 25))))            ; 中文字号
+                                 :size 23))))            ; 中文字号
 
 ;; highlight org-mode
 (require 'org)
@@ -120,5 +120,27 @@
 ;; no voice
 ;; 完全禁用声音
 (setq ring-bell-function 'ignore)
+
+;; colorful dired
+(add-to-list 'load-path "~/.emacs.d/site-lisp/diredfl")
+(require 'diredfl)
+(diredfl-global-mode 1)
+
+;; show icons in dired
+(add-to-list 'load-path "~/.emacs.d/site-lisp/all-the-icons-dired")
+(load "all-the-icons-dired.el")
+(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+
+;; hide or show .xxxx files in dired
+(add-to-list 'load-path "~/.emacs.d/site-lisp/dired-hide-dotfiles")
+(load "dired-hide-dotfiles")
+(dired-hide-dotfiles-mode 1)
+(defun my-dired-mode-hook ()
+  "My `dired' mode hook."
+  ;; To hide dot-files by default
+  (dired-hide-dotfiles-mode))
+(define-key dired-mode-map "." #'dired-hide-dotfiles-mode)
+(add-hook 'dired-mode-hook #'my-dired-mode-hook)
+
 
 (provide 'init-ui)
