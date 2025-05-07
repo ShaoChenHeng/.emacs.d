@@ -30,4 +30,7 @@
 (setq sort-tab-show-tab-icon t)
 (sort-tab-mode 1)
 
+(global-set-key (kbd "M-k") 'sort-tab-select-next-tab)
+(global-set-key (kbd "M-j") 'sort-tab-select-prev-tab)
+
 (provide 'init-sort-tab)
