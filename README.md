@@ -10,6 +10,7 @@
 [Monokai主题](https://github.com/oneKelvinSmith/monokai-emacs) 
 
 **关闭原始界面的各种工具**
+
 ```elisp
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
@@ -18,11 +19,13 @@
 ```
 
 **显示行号**
+
 ```elisp
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 ```
 
 **当前行高亮**
+
 ```elisp
 (use-package hl-line
   :ensure nil
@@ -30,6 +33,7 @@
 ```
 
 **字体设置**
+
 ```elisp
 (when (display-graphic-p)  ; only gui
   ;; English font (Mono prefer)
@@ -46,6 +50,7 @@
 ```
 
 **当光标在括号中间高亮最近的一对括号**
+
 ```elisp
 (define-advice show-paren-function (:around (fn) fix-show-paren-function)
   "Highlight enclosing parens."
@@ -56,6 +61,7 @@
 ```
 
 **选中区域代码反色**
+
 ```elisp
 (defun my/region-highlight-if-whole-line ()
   "if the line selected inverse color"
@@ -71,6 +77,7 @@
 ```
 
 **更丝滑的屏幕滚动**
+
 ```elisp
 (require 'smooth-scrolling)
 (smooth-scrolling-mode 1)
@@ -87,13 +94,16 @@
 ```
 
 **控制水平滚动字符数**
+
 ```elisp
 (setq hscroll-step 1)
 (setq hscroll-margin 1)
 ```
 
 **全局符号美化模式**
+
 将代码中的 lambda、-> 等符号自动显示为更美观的 Unicode 字符（如 λ、→），并在编程模式和 Org 模式中生效。
+
 ```elisp
 (global-prettify-symbols-mode 1)
 (defun add-pretty-lambda ()
@@ -111,8 +121,11 @@
 ```
 
 **增删改代码特效**
+
 它会在编辑代码或文本时高亮显示被修改（增/删/改）的代码块，并通过脉冲动画和自定义颜色（如绿色 #74F466 表示添加、蓝色 #00BBFF 表示更改、红色 #EE365A 表示删除）增强视觉反馈。
-实际的使用过程中“改”的脉冲特效触发较少。
+
+实际的使用中“改”的脉冲特效触发较少。
+
 ```elisp
 (use-package goggles
   :hook ((prog-mode text-mode) . goggles-mode)
@@ -129,12 +142,15 @@
 ```
 
 **让Emacs更安静**
+
 ```elisp
 (setq ring-bell-function 'ignore)
 ```
 
 **更花里胡哨的dired**
+
 显示更多色彩
+
 ```elisp
 (add-to-list 'load-path "~/.emacs.d/site-lisp/diredfl")
 (require 'diredfl)
@@ -142,6 +158,7 @@
 ```
 
 显示文件图标
+
 ```elisp
 (add-to-list 'load-path "~/.emacs.d/site-lisp/all-the-icons-dired")
 (load "all-the-icons-dired.el")
@@ -149,7 +166,9 @@
 ```
 
 **隐藏文件**
+
 隐藏类似".emacs.d"和".gitignore"这样的文件，不在dired中显示
+
 ```elisp
 (add-to-list 'load-path "~/.emacs.d/site-lisp/dired-hide-dotfiles")
 (load "dired-hide-dotfiles")
@@ -162,12 +181,20 @@
 (add-hook 'dired-mode-hook #'my-dired-mode-hook)
 ```
 
+### init-kaomoji-title-bar
+
+项目地址:[kaomoji-title-bar](https://github.com/shaochenheng/kaomoji-title-bar/)
+
+在标题栏显示一个颜文字，并且在光标移动时发生变化。
+
 ### init-dashboard
 
 具体效果：
+
 ![dashboard](https://github.com/ShaoChenHeng/.emacs.d/blob/master/screenshot/3.png)
 
 随机显示一张图片在dashboard上:
+
 ```elisp
 (setq dashboard-startup-banner
       (concat "~/.emacs.d/dashboardPic/pic/p"
@@ -191,6 +218,7 @@
 
 **pikachu-mode**
 项目地址: [pikachu-mode](https://github.com/ShaoChenHeng/pikachu-mode)
+
 仿照[parrot-mode](https://github.com/dp12/parrot)实现的。皮卡丘有静坐和奔跑两种状态，在光标移动时触发奔跑状态，光标不移动时触发静坐状态。将皮卡丘显示在doom-modeline上。
 
 ```elisp
@@ -211,6 +239,7 @@
 (add-hook 'emacs-idle-hook (lambda () (pikachu-stop-animation)))
 ```
 控制doom-modeline的字体与buffer字体不同，产生对比。
+
 ```elisp
 (if (facep 'mode-line-active)
     (set-face-attribute 'mode-line-active nil :family "mononoki" :height 180) ; For 29+
@@ -221,6 +250,7 @@
 ### init-treemacs
 
 在左侧生成一个项目列表。项目地址：[treemacs](https://github.com/Alexander-Miller/treemacs)
+
 更改treemacs的原始图标:
 ```elisp
 (add-to-list 'load-path "~/.emacs.d/site-lisp/treemacs-nerd-icons")
