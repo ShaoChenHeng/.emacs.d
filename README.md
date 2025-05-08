@@ -7,9 +7,11 @@
 ## 界面增强
 ### init-ui.el
 
-[Monokai主题](https://github.com/oneKelvinSmith/monokai-emacs) 
+#### Monokai-Emacs
 
-**关闭原始界面的各种工具**
+[Monokai主题](https://github.com/oneKelvinSmith/monokai-emacs)
+
+#### 关闭原始界面的各种工具
 
 ```elisp
 (tool-bar-mode -1)
@@ -18,21 +20,31 @@
 (setq inhibit-startup-screen t)
 ```
 
-**显示行号**
+#### display-line-numbers-mode
 
 ```elisp
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 ```
 
-**当前行高亮**
+#### hl-line
 
+当前行高亮
 ```elisp
 (use-package hl-line
   :ensure nil
   :hook (after-init . global-hl-line-mode))
 ```
 
-**字体设置**
+#### 字体设置
+最主要的是：
+- [monego](https://github.com/cseelus/monego)
+- [霞鹜文楷](https://github.com/lxgw/LxgwWenKai)
+
+其他的配置字体在这里也一并给出：
+- [comic mono](https://github.com/wayou/comic-mono-font)，sort-tab的字体。
+- [mononoki](https://github.com/madmalik/mononoki)，doom-modeline的字体。
+- [Pokemon Solid](https://font.download/font/pokemon-solid-2)，winum的字体，特点是像手写体，并且特别醒目。
+- [Hack](https://github.com/source-foundry/Hack)，treemacs的字体。
 
 ```elisp
 (when (display-graphic-p)  ; only gui
@@ -49,8 +61,8 @@
                                  :size 23))))            ; 中文字号
 ```
 
-**当光标在括号中间高亮最近的一对括号**
-
+#### Highlight enclosing parens
+当光标在括号中间高亮最近的一对括号
 ```elisp
 (define-advice show-paren-function (:around (fn) fix-show-paren-function)
   "Highlight enclosing parens."
@@ -60,7 +72,7 @@
 	     (funcall fn))))))
 ```
 
-**选中区域代码反色**
+#### 选中区域代码反色
 
 ```elisp
 (defun my/region-highlight-if-whole-line ()
@@ -76,7 +88,7 @@
 (add-hook 'activate-mark-hook #'my/region-highlight-if-whole-line)
 ```
 
-**更丝滑的屏幕滚动**
+#### 更丝滑的屏幕滚动
 
 ```elisp
 (require 'smooth-scrolling)
@@ -93,14 +105,14 @@
 (pixel-scroll-precision-mode t)
 ```
 
-**控制水平滚动字符数**
+以下设置控制水平滚动字符数：
 
 ```elisp
 (setq hscroll-step 1)
 (setq hscroll-margin 1)
 ```
 
-**全局符号美化模式**
+#### pretty-symbols
 
 将代码中的 lambda、-> 等符号自动显示为更美观的 Unicode 字符（如 λ、→），并在编程模式和 Org 模式中生效。
 
@@ -119,8 +131,7 @@
 (add-hook 'prog-mode-hook 'add-pretty-lambda)
 (add-hook 'org-mode-hook 'add-pretty-lambda)
 ```
-
-**增删改代码特效**
+#### goggles
 
 它会在编辑代码或文本时高亮显示被修改（增/删/改）的代码块，并通过脉冲动画和自定义颜色（如绿色 #74F466 表示添加、蓝色 #00BBFF 表示更改、红色 #EE365A 表示删除）增强视觉反馈。
 
@@ -141,13 +152,13 @@
   )
 ```
 
-**让Emacs更安静**
+#### 让Emacs更安静
 
 ```elisp
 (setq ring-bell-function 'ignore)
 ```
 
-**更花里胡哨的dired**
+#### dired
 
 显示更多色彩
 
@@ -164,8 +175,6 @@
 (load "all-the-icons-dired.el")
 (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
 ```
-
-**隐藏文件**
 
 隐藏类似".emacs.d"和".gitignore"这样的文件，不在dired中显示
 
@@ -200,7 +209,7 @@
       (concat "~/.emacs.d/dashboardPic/pic/p"
 	      (number-to-string (+ (% (caddr (current-time)) 23) 1))
 	      ".png"))
- 
+
 (if (= (% (caddr (current-time)) 2) 0)
     (setq dashboard-startup-banner
           (concat "~/.emacs.d/dashboardPic/pic/p"
@@ -216,7 +225,7 @@
 
 *doom-modeline的高度会受到全局字体大小的影响，全局字体越大，doom-modeline的高度就越高。*
 
-**pikachu-mode**
+#### pikachu-mode
 项目地址: [pikachu-mode](https://github.com/ShaoChenHeng/pikachu-mode)
 
 仿照[parrot-mode](https://github.com/dp12/parrot)实现的。皮卡丘有静坐和奔跑两种状态，在光标移动时触发奔跑状态，光标不移动时触发静坐状态。将皮卡丘显示在doom-modeline上。
@@ -224,10 +233,10 @@
 ```elisp
 (doom-modeline-def-segment pikachu
   "Display pikachu animation in doom-modeline"
-  (when (and (bound-and-true-p pikachu-mode) 
+  (when (and (bound-and-true-p pikachu-mode)
              (not (active-minibuffer-window)))
     (propertize " " 'display (pikachu-get-anim-frame))))
-	
+
 (doom-modeline-def-modeline 'main
   '(bar pikachu matches buffer-info buffer-position selection-info)
   '(misc-info lsp vcs checker))
@@ -271,19 +280,17 @@
 
 ### init-editing
 
-**启用“删除选择模式”**
+#### delsel
 
-选中一段文本后，直接输入新内容或按删除键时，会自动删除选中的文本并替换为新内容，类似vs-code和sublime的操作逻辑。
+启用“删除选择模式”，选中一段文本后，直接输入新内容或按删除键时，会自动删除选中的文本并替换为新内容，类似vs-code和sublime的操作逻辑。
 ```elisp
 (use-package delsel
   :ensure nil
   :hook (after-init . delete-selection-mode))
 ```
 
-**多行注释**
+#### 多行注释
 
 ```elisp
 (global-set-key (kbd "C-?") 'comment-or-uncomment-region)
 ```
-
-
