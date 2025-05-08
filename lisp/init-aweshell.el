@@ -3,7 +3,7 @@
 
 (require 'aweshell)
 (add-hook 'aweshell-mode-hook 'company-mode)
-(global-set-key (kbd "C-c e") 'aweshell-new)
+(global-set-key (kbd "C-c t") 'aweshell-new)
 
 
 (provide 'init-aweshell)
