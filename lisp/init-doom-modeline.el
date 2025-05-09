@@ -16,26 +16,35 @@
 ;; pikachu segment
 (doom-modeline-def-segment pikachu
   "Display pikachu animation in doom-modeline"
-  (when (and (bound-and-true-p pikachu-mode) 
+  (when (and (bound-and-true-p pikachu-mode)
              (not (active-minibuffer-window)))
     (propertize " " 'display (pikachu-get-anim-frame))))
 
-;;(display-time-mode 1)
-(setq doom-modeline-time t)
+(doom-modeline-def-segment window-number
+  (when (featurep 'winum)
+    (propertize (format " %s " (winum-get-number-string))
+                'face '(
+			:family "Pokemon Solid"
+			:foreground "#f6f6f4"
+			:background "#ac86f1"
+			:weight bold))))
+
+(setq doom-modeline-minor-mode nil)
 
 ;; 创建自定义 modeline
 (doom-modeline-def-modeline 'main
-  '(bar pikachu matches buffer-info buffer-position selection-info)
-  '(misc-info lsp vcs checker))
+  '(window-number pikachu matches buffer-info buffer-position selection-info)
+  '(major-mode minor-modes lsp vcs checker misc-info))
 
 ;; set modeline font
 ;;(setq doom-modeline-height 15)
 (if (facep 'mode-line-active)
-    (set-face-attribute 'mode-line-active nil :family "mononoki" :height 180) ; For 29+
-  (set-face-attribute 'mode-line nil :family "mononoki" :height 180))
-(set-face-attribute 'mode-line-inactive nil :family "mononoki" :height 180)
+    (set-face-attribute 'mode-line-active nil :family "mononoki" :height 170) ; For 29+
+  (set-face-attribute 'mode-line nil :family "mononoki" :height 170))
+(set-face-attribute 'mode-line-inactive nil :family "mononoki" :height 170)
 
 (setq doom-modeline-mode-line 'main)
+
 (doom-modeline-mode 1)
 
 ;; pikachu hook
