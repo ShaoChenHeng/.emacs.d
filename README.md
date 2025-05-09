@@ -270,6 +270,12 @@
 
 我的这个配置无法通过鼠标点击展开文件夹和打开文件，还在研究如何解决。
 
+### sort-tab
+
+项目地址：[sort-tab](https://github.com/manateelazycat/sort-tab)
+
+在Emacs窗口的上方显示一排标签栏。
+
 ### init-alpha
 
 更加花里胡哨的透明化配置，和Gnome的[blur-my-shell](https://extensions.gnome.org/extension/3193/blur-my-shell/)配合使用效果更佳。
@@ -293,4 +299,167 @@
 
 ```elisp
 (global-set-key (kbd "C-?") 'comment-or-uncomment-region)
+```
+
+#### iedit-mode
+
+对当前选中文本打开iedit-mode,可以对buffer内的所有该字符串进行编辑，在进行大量的搜索替换时，会起到作用。
+
+```elisp
+(add-to-list 'load-path "~/.emacs.d/site-lisp/iedit/")
+(require 'iedit)
+(global-set-key (kbd "M-s e") 'iedit-mode)
+```
+
+#### move-text
+
+对光标所在行的文本进行上下移动，这个功能在vscode和sublime中也有。
+
+```elisp
+(add-to-list 'load-path "~/.emacs.d/site-lisp/move-text/")
+(require 'move-text)
+(global-set-key (kbd "C-<up>") 'move-text-up)
+(global-set-key (kbd "C-<down>") 'move-text-down)
+```
+
+#### 调整buffer大小
+
+可以从四个方向调整buffer的大小
+
+```elisp
+;; 向左扩大窗口（通过向右缩小相邻窗口实现）
+(defun my/enlarge-window-left ()
+  "向左扩大当前窗口宽度"
+  (interactive)
+  (shrink-window-horizontally -1)) ; 负数表示反向操作
+
+;; 向上扩大窗口（通过向下缩小相邻窗口实现）
+(defun my/enlarge-window-up ()
+  "向上扩大当前窗口高度"
+  (interactive)
+  (shrink-window -1)) ; 负数表示反向操作
+
+;; 绑定快捷键
+(global-set-key (kbd "M-<left>")  'my/enlarge-window-left)   ; 向左扩大
+(global-set-key (kbd "M-<right>") 'enlarge-window-horizontally) ; 向右扩大
+(global-set-key (kbd "M-<up>")    'my/enlarge-window-up)     ; 向上扩大
+(global-set-key (kbd "M-<down>")  'enlarge-window)           ; 向下扩大
+```
+
+#### watch-other-window
+
+在多个窗口编辑的时候，假如正在编辑窗口1,可以通过这个插件移动窗口2的代码。
+
+```elisp
+(add-to-list 'load-path "~/.emacs.d/site-lisp/watch-other-window")
+(require 'watch-other-window)
+(global-set-key (kbd "C--")  'watch-other-window-down)
+(global-set-key (kbd "C-=")  'watch-other-window-up)
+(global-set-key (kbd "M--")  'watch-other-window-down-line)
+(global-set-key (kbd "M-=")  'watch-other-window-up-line)
+```
+
+#### auto-save
+
+自动保存
+
+```elisp
+(add-to-list 'load-path "~/.emacs.d/site-lisp/watch-other-window")
+(require 'watch-other-window)
+(global-set-key (kbd "C--")  'watch-other-window-down)
+(global-set-key (kbd "C-=")  'watch-other-window-up)
+(global-set-key (kbd "M--")  'watch-other-window-down-line)
+(global-set-key (kbd "M-=")  'watch-other-window-up-line)
+(setq auto-save-disable-predicates
+      '((lambda ()
+      (string-suffix-p
+      "gpg"
+      (file-name-extension (buffer-name)) t))))
+```
+
+#### goto-line-preview
+
+在进行行跳转前，可以现预览要跳转到的行位置。
+
+``` elisp
+(add-to-list 'load-path "~/.emacs.d/site-lisp/goto-line-preview")
+(require 'goto-line-preview)
+(global-set-key (kbd "M-g M-g")  'goto-line-preview)
+;; Highlight 1.5 seconds when change preview line
+(setq goto-line-preview-hl-duration 1.5)
+
+;; Change highlight background color to white
+(set-face-background 'goto-line-preview-hl "#5a94f5")
+```
+
+### 窗口管理
+
+#### winum
+
+对窗口进行编号，使用"M-1"、"M-2"之类快捷键进行快速切换。
+
+```elisp
+(use-package winum
+  :ensure t
+  :config
+  (winum-mode 1))
+
+(with-eval-after-load 'winum
+  (add-to-list 'winum-ignored-buffers "*sort-tab*"))
+
+(global-set-key (kbd "M-1") 'winum-select-window-1)
+(global-set-key (kbd "M-2") 'winum-select-window-2)
+(global-set-key (kbd "M-3") 'winum-select-window-3)
+(global-set-key (kbd "M-4") 'winum-select-window-4)
+(global-set-key (kbd "M-5") 'winum-select-window-5)
+
+(provide 'init-winum)
+```
+
+可以将编号显示在doom-modeline上。
+
+```elisp
+(doom-modeline-def-segment window-number
+  (when (featurep 'winum)
+    (propertize (format " %s " (winum-get-number-string))
+                'face '(
+			:family "Pokemon Solid"
+			:foreground "#f6f6f4"
+			:background "#ac86f1"
+			:weight bold))))
+```
+
+#### ace-window
+
+通过`C-x C-o`进入ace-window,按数字进行窗口切换。（切换速度不如winum）
+
+```elisp
+(add-to-list 'load-path "~/.emacs.d/site-lisp/ace-window")
+(require 'ace-window)
+(setq aw-background t)
+(set-face-attribute 'aw-background-face nil
+                    :background "grey"       ; 背景色改为红色
+                    :foreground "#676863"     ; 字符颜色白色
+                    :weight 'bold)
+
+(global-set-key (kbd "C-x C-o") 'ace-window)
+```
+
+`?x`和`?m`等可以进一步操作。
+
+```elisp
+(defvar aw-dispatch-alist
+  '((?x aw-delete-window "Delete Window")
+	(?m aw-swap-window "Swap Windows")
+	(?M aw-move-window "Move Window")
+	(?c aw-copy-window "Copy Window")
+	(?j aw-switch-buffer-in-window "Select Buffer")
+	(?n aw-flip-window)
+	(?u aw-switch-buffer-other-window "Switch Buffer Other Window")
+	(?c aw-split-window-fair "Split Fair Window")
+	(?v aw-split-window-vert "Split Vert Window")
+	(?b aw-split-window-horz "Split Horz Window")
+	(?o delete-other-windows "Delete Other Windows")
+	(?? aw-show-dispatch-help))
+  "List of actions for `aw-dispatch-default'.")
 ```
