@@ -52,7 +52,6 @@
 					    :height 1.9
 					    :weight regular))))
 
-
 )
 
 (dashboard-modify-heading-icons '((recents   . "file-text")
@@ -77,18 +76,18 @@
 ;; "path/to/your/image.gif", "path/to/your/image.png" or "path/to/your/text.txt" which displays whatever gif/image/text you would prefer
 
 (setq dashboard-startup-banner
-      (concat "/home/scheng/.emacs.d/dashboardPic/pic/p"
+      (concat "~/.emacs.d/dashboardPic/pic/p"
 	      (number-to-string (+ (% (caddr (current-time)) 23) 1))
 	      ".png"))
  
  
 (if (= (% (caddr (current-time)) 2) 0)
     (setq dashboard-startup-banner
-          (concat "/home/scheng/.emacs.d/dashboardPic/pic/p"
+          (concat "~/.emacs.d/dashboardPic/pic/p"
 	                (number-to-string (+ (% (caddr (current-time)) 23) 1))
 	                ".png"))
   (setq dashboard-startup-banner
-        (concat "/home/scheng/.emacs.d/dashboardPic/gif/"
+        (concat "~/.emacs.d/dashboardPic/gif/"
 	              (number-to-string (+ (% (caddr (current-time)) 19) 1))
 	              ".gif")))
 
