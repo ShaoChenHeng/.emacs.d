@@ -9,7 +9,7 @@
 
    `(sort-tab-current-tab-face
      ((t (:family "Comic Mono"
-                  :height 200
+                  :height 180
                   :background ,bg-color
                   :foreground ,key-color
 		  :weight bold
@@ -17,15 +17,14 @@
 		  ))))
    `(sort-tab-other-tab-face
      ((t (:family "Comic Mono"
-                  :height 200
+                  :height 180
                   :background ,bg-color
                   :foreground ,fg-color
 		  :weight normal
 		  ))))
    `(sort-tab-separator-face
-    ((t(:foreground ,string-color :background ,bg-color :weight normal))))
+     ((t(:foreground ,string-color :background ,bg-color :weight normal))))))
 
-   ))
 (setq sort-tab-show-index-number t)
 (setq sort-tab-show-tab-icon t)
 (sort-tab-mode 1)
