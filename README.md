@@ -463,3 +463,21 @@
 	(?? aw-show-dispatch-help))
   "List of actions for `aw-dispatch-default'.")
 ```
+
+#### popper
+
+将一些弹出窗口标记为‘POP’，通过`C+` `能够快速关闭和开启，防止破坏原有的buffer布局。
+
+[poper](https://github.com/karthink/popper)
+
+#### awesome-pair
+
+括号匹配插件。
+
+[awesom-pair](https://github.com/manateelazycat/awesome-pair)
+
+#### lsp-bridge
+
+代码补全插件。
+
+[lsp-bridge](https://github.com/manateelazycat/lsp-bridge)
