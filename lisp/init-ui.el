@@ -18,7 +18,7 @@
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 ;;(global-display-line-numbers-mode 1)
 
-;; slim cursor 
+;; slim cursor
 (setq-default cursor-type 'bar)
 
 ;; hight current line
@@ -32,7 +32,7 @@
   (set-face-attribute 'default nil
                       :family "monego"   ; font name
                       :weight 'regular   ; regular or bold
-                      :height 180)       ; font size
+                      :height 175)       ; vfont size
 
   ;; 设置中文字体（覆盖CJK字符集）
   (dolist (charset '(kana han cjk-misc bopomofo))
@@ -78,12 +78,13 @@
 (setq fast-but-imprecise-scrolling nil)
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
 (setq mouse-wheel-progressive-speed nil)
+(pixel-scroll-precision-mode t)
 
 ;; Horizontal Scroll
 (setq hscroll-step 1)
 (setq hscroll-margin 1)
 
-;;(setq-default truncate-lines t) 
+;;(setq-default truncate-lines t)
 
 ;; pretty symbols
 (global-prettify-symbols-mode 1)
@@ -114,33 +115,14 @@
   (setq-default goggles-pulse t) ;; set to nil to disable pulsing
   )
 
-;; smooth scroll
-(pixel-scroll-precision-mode t)
-
 ;; no voice
 ;; 完全禁用声音
 (setq ring-bell-function 'ignore)
 
-;; colorful dired
-(add-to-list 'load-path "~/.emacs.d/site-lisp/diredfl")
-(require 'diredfl)
-(diredfl-global-mode 1)
-
-;; show icons in dired
-(add-to-list 'load-path "~/.emacs.d/site-lisp/all-the-icons-dired")
-(load "all-the-icons-dired.el")
-(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
-
-;; hide or show .xxxx files in dired
-(add-to-list 'load-path "~/.emacs.d/site-lisp/dired-hide-dotfiles")
-(load "dired-hide-dotfiles")
-(dired-hide-dotfiles-mode 1)
-(defun my-dired-mode-hook ()
-  "My `dired' mode hook."
-  ;; To hide dot-files by default
-  (dired-hide-dotfiles-mode))
-(define-key dired-mode-map "." #'dired-hide-dotfiles-mode)
-(add-hook 'dired-mode-hook #'my-dired-mode-hook)
-
+;; ident-bars
+(add-to-list 'load-path "~/.emacs.d/site-lisp/indent-bars")
+(require 'indent-bars)
+(setq indent-bars-width-frac 0.15)
+(add-hook 'prog-mode-hook 'indent-bars-mode)
 
 (provide 'init-ui)
