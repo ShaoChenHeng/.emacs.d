@@ -1,5 +1,6 @@
-;; Standard emacs's behavior
+(setq gc-cons-threshold (* 100 1024 1024))
 
+;; Standard emacs's behavior
 ;; Enter directly after selecting the text without deleting
 (use-package delsel
   :ensure nil
@@ -56,60 +57,26 @@
   (call-interactively 'occur))
 (global-set-key (kbd "M-s o") 'occur-dwim)
 
-;; many cursors (just like sublime cursor)
+;; iedit
+;; 配合narrow-region C-x n n C-x n w使用效果更佳
 (add-to-list 'load-path "~/.emacs.d/site-lisp/iedit/")
 (require 'iedit)
 (global-set-key (kbd "M-s e") 'iedit-mode)
 
-;; move code up or dowm
-(defun move-text-internal (arg)
-  (cond
-   ((and mark-active transient-mark-mode)
-    (if (> (point) (mark))
-        (exchange-point-and-mark))
-    (let ((column (current-column))
-          (text (delete-and-extract-region (point) (mark))))
-      (forward-line arg)
-      (move-to-column column t)
-      (set-mark (point))
-      (insert text)
-      (exchange-point-and-mark)
-      (setq deactivate-mark nil)))
-   (t
-    (let ((column (current-column)))
-      (beginning-of-line)
-      (when (or (> arg 0) (not (bobp)))
-        (forward-line)
-        (when (or (< arg 0) (not (eobp)))
-          (transpose-lines arg)
-          (when (and (eval-when-compile
-                       '(and (>= emacs-major-version 24)
-                             (>= emacs-minor-version 3)))
-                     (< arg 0))
-            (forward-line -1)))
-        (forward-line -1))
-      (move-to-column column t)))))
+;; move text up or down
+(add-to-list 'load-path "~/.emacs.d/site-lisp/move-text/")
+(require 'move-text)
+(global-set-key (kbd "C-<up>") 'move-text-up)
+(global-set-key (kbd "C-<down>") 'move-text-down)
 
-(defun move-text-down (arg)
-  "Move region (transient-mark-mode active) or current line
-  arg lines down."
-  (interactive "*p")
-  (move-text-internal arg))
-
-(defun move-text-up (arg)
-  "Move region (transient-mark-mode active) or current line
-  arg lines up."
-  (interactive "*p")
-  (move-text-internal (- arg)))
-
-
-(global-set-key [M-up] 'move-text-up)
-(global-set-key [M-down] 'move-text-down)
-
+;; open new line above or below
+(add-to-list 'load-path "~/.emacs.d/site-lisp/open-newline/")
+(require 'open-newline)
+(global-set-key (kbd "C-<return>") 'open-newline-above)
+(global-set-key (kbd "M-<return>") 'open-newline-below)
 
 (add-to-list 'load-path "~/.emacs.d/site-lisp/lazy-load/")
 (require 'lazy-load)
-
 
 ;; 向左扩大窗口（通过向右缩小相邻窗口实现）
 (defun my/enlarge-window-left ()
@@ -129,34 +96,51 @@
 (global-set-key (kbd "M-<up>")    'my/enlarge-window-up)     ; 向上扩大
 (global-set-key (kbd "M-<down>")  'enlarge-window)           ; 向下扩大
 
-;; 向左缩小窗口（直接调用原生函数）
-(defun my/shrink-window-left ()
-  "向左缩小当前窗口宽度"
-  (interactive)
-  (shrink-window-horizontally 1))
+;; watch other dont C-x o
+(add-to-list 'load-path "~/.emacs.d/site-lisp/watch-other-window")
+(require 'watch-other-window)
+(global-set-key (kbd "C--")  'watch-other-window-down)
+(global-set-key (kbd "C-=")  'watch-other-window-up)
+(global-set-key (kbd "M--")  'watch-other-window-down-line)
+(global-set-key (kbd "M-=")  'watch-other-window-up-line)
 
-;; 向右缩小窗口（需要自定义实现）
-(defun my/shrink-window-right ()
-  "向右缩小当前窗口宽度"
-  (interactive)
-  (enlarge-window-horizontally -1)) ; 负数表示反向操作
+;; auto save
+(add-to-list 'load-path "~/.emacs.d/site-lisp/auto-save")
+(require 'auto-save)
+(auto-save-enable)
 
-;; 向上缩小窗口（直接调用原生函数）
-(defun my/shrink-window-up ()
-  "向上缩小当前窗口高度"
-  (interactive)
-  (shrink-window 1))
+(setq auto-save-silent t)   ; quietly save
+(setq auto-save-delete-trailing-whitespace t)  ; automatically delete spaces at the end of the line when saving
 
-;; 向下缩小窗口（需要自定义实现）
-(defun my/shrink-window-down ()
-  "向下缩小当前窗口高度"
-  (interactive)
-  (enlarge-window -1)) ; 负数表示反向操作
+;;; custom predicates if you don't want auto save.
+;;; disable auto save mode when current filetype is an gpg file.
+(setq auto-save-disable-predicates
+      '((lambda ()
+      (string-suffix-p
+      "gpg"
+      (file-name-extension (buffer-name)) t))))
 
-;; 绑定缩小快捷键（Control+方向键）
-(global-set-key (kbd "C-<left>")  'my/shrink-window-left)   ; 向左缩小
-(global-set-key (kbd "C-<right>") 'my/shrink-window-right)  ; 向右缩小
-(global-set-key (kbd "C-<up>")    'my/shrink-window-up)     ; 向上缩小
-(global-set-key (kbd "C-<down>")  'my/shrink-window-down)   ; 向下缩小
+(add-to-list 'load-path "~/.emacs.d/site-lisp/goto-line-preview")
+(require 'goto-line-preview)
+(global-set-key (kbd "M-g M-g")  'goto-line-preview)
+;; Highlight 1.5 seconds when change preview line
+(setq goto-line-preview-hl-duration 1.5)
+
+;; Change highlight background color to white
+(set-face-background 'goto-line-preview-hl "#5a94f5")
+
+;; 快速eval-buffer
+(global-set-key (kbd "C-c C-e") 'eval-buffer)
+
+;; 快速重启
+(global-set-key (kbd "C-c C-r") 'restart-emacs)
+
+;;快速打开*Message*
+(global-set-key (kbd "C-c m") 'view-echo-area-messages)
+
+;; 快速执行python
+(global-set-key (kbd "C-c C-p") 'run-python)
+
+
 
 (provide 'init-editing)
