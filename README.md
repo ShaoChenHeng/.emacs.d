@@ -1,8 +1,8 @@
 # My Emacs configuration
 
-![dashboard](https://github.com/ShaoChenHeng/.emacs.d/blob/master/screenshot/3.png)
+![dashboard](./screenshot/3.png)
 
-![code](https://github.com/ShaoChenHeng/.emacs.d/blob/master/screenshot/4.png)
+![code](./screenshot/4.png)
 
 ## 界面增强
 ### init-ui.el
@@ -207,6 +207,8 @@
 
 ### init-kaomoji-title-bar
 
+![kaomoji-title-bar](./screenshot/kaomoji-title-bar.png)
+
 项目地址:[kaomoji-title-bar](https://github.com/shaochenheng/kaomoji-title-bar/)
 
 在标题栏显示一个颜文字，并且在光标移动时发生变化。
@@ -241,6 +243,7 @@
 *doom-modeline的高度会受到全局字体大小的影响，全局字体越大，doom-modeline的高度就越高。*
 
 #### pikachu-mode
+![pikachu-mode](./screenshot/pikachu-mode.png)
 项目地址: [pikachu-mode](https://github.com/ShaoChenHeng/pikachu-mode)
 
 仿照[parrot-mode](https://github.com/dp12/parrot)实现的。皮卡丘有静坐和奔跑两种状态，在光标移动时触发奔跑状态，光标不移动时触发静坐状态。将皮卡丘显示在doom-modeline上。
