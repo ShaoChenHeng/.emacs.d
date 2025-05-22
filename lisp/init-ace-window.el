@@ -1,13 +1,16 @@
 (add-to-list 'load-path "~/.emacs.d/site-lisp/ace-window")
 (require 'ace-window)
 (setq aw-background t)
+
+(setq aw-ignore-on t)                              ; 新增：确保开启忽略功能
+(add-to-list 'aw-ignored-buffers "*sort-tab*")       ; 新增：忽略 sort-tab 缓冲区
+
 (set-face-attribute 'aw-background-face nil
                     :background "grey"       ; 背景色改为红色
                     :foreground "#676863"     ; 字符颜色白色
-                    :weight 'bold
-		    )
+                    :weight 'bold)
 
-(global-set-key (kbd "C-x C-o") 'ace-window)
+(global-set-key (kbd "C-c C-o") 'ace-window)
 
 (defvar aw-dispatch-alist
   '((?x aw-delete-window "Delete Window")
