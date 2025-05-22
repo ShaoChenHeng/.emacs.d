@@ -74,6 +74,8 @@
 
 #### 选中区域代码反色
 
+![selected-code](./screenshot/selected-code.png)
+
 ```elisp
 (defun my/region-highlight-if-whole-line ()
   "if the line selected inverse color"
@@ -156,6 +158,19 @@
 
 ```elisp
 (setq ring-bell-function 'ignore)
+```
+
+#### ident-bars
+
+类似sublime的增强缩进显示。
+
+![ident-bars](./screenshot/ident-bars.png)
+
+```elisp
+(add-to-list 'load-path "~/.emacs.d/site-lisp/indent-bars")
+(require 'indent-bars)
+(setq indent-bars-width-frac 0.15) ;; 控制线条粗细
+(add-hook 'prog-mode-hook 'indent-bars-mode)
 ```
 
 #### dired
