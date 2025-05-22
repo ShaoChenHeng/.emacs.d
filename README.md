@@ -36,7 +36,7 @@
 ```
 
 #### 字体设置
-最主要的是：
+英文字体和中文字体分别是：
 - [monego](https://github.com/cseelus/monego)
 - [霞鹜文楷](https://github.com/lxgw/LxgwWenKai)
 
