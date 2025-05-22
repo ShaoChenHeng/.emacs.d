@@ -499,3 +499,75 @@
 代码补全插件。
 
 [lsp-bridge](https://github.com/manateelazycat/lsp-bridge)
+
+### 搜索增强
+
+#### ivy, counsel, swiper
+
+在ivy中按tab有两个功能，如果还能继续匹配则补全，如果不能继续匹配就进入（确认）该项。但是如果不存在该项就会报错。报错太烦人了，于是我就设置回车为确认。
+
+```elisp
+(use-package ivy
+  :defer 1
+  :demand
+  :hook (after-init . ivy-mode)
+  :config
+
+  (define-key ivy-minibuffer-map (kbd "TAB") #'ivy-partial)
+  ;; 回车直接确认选择
+  (define-key ivy-minibuffer-map (kbd "<return>") #'ivy-done)
+
+  ;; 反色选中项
+  (set-face-attribute 'ivy-current-match nil
+                      :inverse-video t
+                      :weight 'bold)
+  :custom
+  (ivy-use-virtual-buffers t)
+  (ivy-height 10)
+  (ivy-on-del-error-function nil)
+  (ivy-magic-slash-non-match-action 'ivy-magic-slash-non-match-create)
+  (ivy-count-format "【%d/%d】")
+  (ivy-wrap t))
+```
+
+在counsel中添加需要开启的搜索增强功能，但是似乎即使不添加也会默认开启。因为我不喜欢增强版find-file，它的排序逻辑是字典序优先级更高，而原始find-file的逻辑是最长字符串匹配的优先级更高，我十分不习惯增强版find-file.所以在这里并没有开启，然而它还是给我开启了。
+
+```elisp
+(use-package counsel
+  :ensure t
+  :after ivy
+  :bind (("M-x" . counsel-M-x)          ; 增强版M-x
+         ("C-x b" . counsel-switch-buffer) ; 增强版缓冲区切换
+         ("C-c g" . counsel-git)        ; Git文件搜索
+         ("C-c j" . counsel-git-grep)   ; Git内容搜索
+         ("C-c k" . counsel-ag)         ; ag搜索
+         ("C-x l" . counsel-locate))    ; 系统文件搜索
+  :config
+  (setq counsel-mode-override-describe-bindings nil))
+```
+
+于是我又在下方添加了这个配置，使用原始的find-file。
+
+```elisp
+(defun my-find-file()
+  (interactive)
+  (ivy-mode -1)
+  (call-interactively 'find-file)
+  (ivy-mode 1))
+(global-set-key (kbd "C-x C-f") 'my-find-file)
+```
+
+### AI辅助
+
+#### aidermacs
+
+项目地址：[aidermacs](https://github.com/MatthewZMD/aidermacs)
+
+一个安全的做法是设置一个AI接口的key到环境变量中，再从配置文件中引用这个环境变量。
+
+从起动器打开Emacs使用aidermacs会提示找不到aider，所以我增加了这个设置：
+
+```elisp
+(setenv "DEEPSEEK_API_KEY" (getenv "DEEPSEEK_API_KEY_FROM_ENV"))
+```
+
