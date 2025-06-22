@@ -36,8 +36,20 @@
 (use-package json-mode
   :mode "\\.json\\'")
 
-(add-to-list 'load-path "~/.emacs.d/site-lisp/instant-rename-tag")
-(require 'instant-rename-tag)
-(global-set-key (kbd "C-c r") 'instant-rename-tag)
+(use-package auto-rename-tag
+  :config
+  (setq auto-rename-tag-use-functions t)
+  :hook (web-mode . auto-rename-tag-mode))
+
+;; instant-rename-tag
+;; (add-to-list 'load-path "~/.emacs.d/site-lisp/instant-rename-tag")
+;; (require 'instant-rename-tag)
+;; (global-set-key (kbd "C-c r") 'instant-rename-tag)
+
+;;highlight-matching-tag
+(add-to-list 'load-path "~/.emacs.d/site-lisp/highlight-matching-tag")
+(require 'highlight-matching-tag)
+(highlight-matching-tag 1)
+
 
 (provide 'init-webdev)
