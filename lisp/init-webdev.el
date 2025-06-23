@@ -5,7 +5,9 @@
   (font-lock-comment-face ((t (:foreground "#828282"))))
   :mode
   ("\\.phtml\\'" "\\.tpl\\.php\\'" "\\.[agj]sp\\'" "\\.as[cp]x\\'" "\\.js\\'"
-   "\\.erb\\'" "\\.mustache\\'" "\\.djhtml\\'" "\\.[t]?html?\\'" "\\.vue\\'")
+   "\\.erb\\'" "\\.mustache\\'" "\\.djhtml\\'" "\\.[t]?html?\\'" "\\.vue\\'"
+   "\\.xml\\'"
+   )
   :config
   (setq web-mode-markup-indent-offset 2)    ; HTML 缩进
   (setq web-mode-css-indent-offset 2)       ; CSS 缩进
@@ -50,6 +52,10 @@
 (add-to-list 'load-path "~/.emacs.d/site-lisp/highlight-matching-tag")
 (require 'highlight-matching-tag)
 (highlight-matching-tag 1)
+
+(custom-set-faces
+ '(web-mode-html-tag-bracket-face ((t (:foreground "#df2b6c")))))
+
 
 
 (provide 'init-webdev)
