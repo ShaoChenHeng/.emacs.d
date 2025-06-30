@@ -619,7 +619,7 @@
 
 #### auto-rename-tag
 
-在编辑css的标签时，同步修改一对标签。例如在修改<h1>时候，</h1>会产生同样的修改
+在编辑css的标签时，同步修改一对标签。例如在修改` <h1> `时候，`</h1>`会产生同样的修改
 
 ```elisp
 (use-package auto-rename-tag
