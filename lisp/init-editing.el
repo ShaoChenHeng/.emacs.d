@@ -57,8 +57,13 @@
   (call-interactively 'occur))
 (global-set-key (kbd "M-s o") 'occur-dwim)
 
-;; iedit
-;; 配合narrow-region C-x n n C-x n w使用效果更佳
+;; iedit (配合narrow-region 使用效果更佳)
+;;
+;; M-x narrow-to-region（默认绑定到 C-x n n）
+;; 此时缓冲区只显示选中部分，其他内容被隐藏。
+;;
+;;执行 M-x widen（默认绑定到 C-x n w）
+;;缓冲区恢复显示全部内容
 (add-to-list 'load-path "~/.emacs.d/site-lisp/iedit/")
 (require 'iedit)
 (global-set-key (kbd "M-s e") 'iedit-mode)
@@ -96,7 +101,20 @@
 (global-set-key (kbd "M-<up>")    'my/enlarge-window-up)     ; 向上扩大
 (global-set-key (kbd "M-<down>")  'enlarge-window)           ; 向下扩大
 
-;; watch other dont C-x o
+;; 智能复制：有选区复制选区，无选区复制整行
+(defun smart-copy ()
+  "Copy region if active, otherwise copy current line."
+  (interactive)
+  (if (use-region-p)
+      (kill-ring-save (region-beginning) (region-end))
+    (save-excursion
+      (kill-ring-save (line-beginning-position) (line-end-position))
+    (message "Copied line"))))
+
+(global-set-key (kbd "M-w") 'smart-copy)
+
+;; 启用 watch-other-window 并绑定快捷键：
+;; C--/C-= 翻页，M--/M-= 行滚动（需先分屏）
 (add-to-list 'load-path "~/.emacs.d/site-lisp/watch-other-window")
 (require 'watch-other-window)
 (global-set-key (kbd "C--")  'watch-other-window-down)
@@ -126,6 +144,11 @@
 ;; Highlight 1.5 seconds when change preview line
 (setq goto-line-preview-hl-duration 1.5)
 
+;; expand-region
+;; use C-= select the whole word
+(require 'expand-region)
+(global-set-key (kbd "M-r") 'er/expand-region)
+
 ;; Change highlight background color to white
 (set-face-background 'goto-line-preview-hl "#5a94f5")
 
@@ -139,8 +162,8 @@
 (global-set-key (kbd "C-c m") 'view-echo-area-messages)
 
 ;; 快速执行python
+;; 当前配置有点奇怪，C-c C-c会执行python程序，还需要C-c C-p打开（终端）才能看到结果
 (global-set-key (kbd "C-c C-p") 'run-python)
-
 
 
 (provide 'init-editing)
