@@ -17,6 +17,8 @@
                'php-mode-hook
                'python-mode-hook
                'js-mode-hook
+	       'web-mode-hook
+	       'vue-mode-hook
                'go-mode-hook
                'qml-mode-hook
                'jade-mode-hook
