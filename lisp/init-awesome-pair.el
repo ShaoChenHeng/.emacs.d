@@ -21,6 +21,7 @@
                'qml-mode-hook
                'jade-mode-hook
                'css-mode-hook
+	       'web-mode-hook
                'ruby-mode-hook
                'coffee-mode-hook
                'rust-mode-hook
