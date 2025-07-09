@@ -138,6 +138,8 @@
       "gpg"
       (file-name-extension (buffer-name)) t))))
 
+
+
 (add-to-list 'load-path "~/.emacs.d/site-lisp/goto-line-preview")
 (require 'goto-line-preview)
 (global-set-key (kbd "M-g M-g")  'goto-line-preview)
@@ -165,5 +167,7 @@
 ;; 当前配置有点奇怪，C-c C-c会执行python程序，还需要C-c C-p打开（终端）才能看到结果
 (global-set-key (kbd "C-c C-p") 'run-python)
 
+;; 和输入法启动冲突，所以禁止
+(global-unset-key (kbd "M-/"))
 
 (provide 'init-editing)
