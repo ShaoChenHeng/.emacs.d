@@ -1,8 +1,9 @@
+;; 设置保存后自动格式化代码
+(use-package prettier-js
+  :commands prettier-js-mode)
+
 ;; WebModePac
 (use-package web-mode
-  :custom-face
-  (css-selector ((t (:inherit default :foreground "#66CCFF"))))
-  (font-lock-comment-face ((t (:foreground "#828282"))))
   :mode
   ("\\.phtml\\'" "\\.tpl\\.php\\'" "\\.[agj]sp\\'" "\\.as[cp]x\\'" "\\.vue\\'"
    "\\.erb\\'" "\\.mustache\\'" "\\.djhtml\\'" "\\.[t]?html?\\'"
@@ -12,20 +13,24 @@
   (setq web-mode-css-indent-offset 2)       ; CSS 缩进
   (setq web-mode-code-indent-offset 2)      ; JS/TS 缩进（在 <script> 内）
   (setq web-mode-attr-indent-offset 2)      ; 属性缩进（如 Vue 的 props）
-;;  (setq web-mode-enable-css-colorization t) ; 开启 CSS 部分色值的展示：展示的时候会有光标显示位置异常
-  (setq web-mode-attr-value-indent-offset 2); 属性值缩进
+  (setq web-mode-enable-css-colorization t) ; 开启 CSS 部分色值的展示：展示的时候会有光标显示位置异常
   (setq indent-tabs-mode nil)              ; 禁用 Tab，使用空格
-  (setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'"))) ; 支持 JSX
+  ;;一对标签高亮
   (setq web-mode-enable-current-element-highlight t)
   (setq web-mode-enable-current-column-highlight nil)
-  (setq web-mode-enable-tag-auto-rename t))
+)
 
+(add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
+(with-eval-after-load 'web-mode
+  (add-to-list 'web-mode-engines-alist '("vue" . "\\.vue\\'"))
+  (setq web-mode-content-types-alist
+        '(("vue" . "\\.vue\\'"))))
 
-(use-package emmet-mode
-  :config
-  (setq emmet-expand-jsx-className? t) ; 支持 JSX/Vue 的 class 绑定
-  :hook ((web-mode . emmet-mode)
-         (css-mode . emmet-mode)))
+;; (use-package emmet-mode
+;;   :config
+;;   (setq emmet-expand-jsx-className? t) ; 支持 JSX/Vue 的 class 绑定
+;;   :hook ((web-mode . emmet-mode)
+;;          (css-mode . emmet-mode)))
 
 ;; js
 (use-package js2-mode
@@ -72,7 +77,6 @@
 ;; 所以下面这几个函数检测光标离开<>，自动刷新配色
 ;; (defvar my/web-mode-last-in-tag-p nil
 ;;   "记录上一次光标是否在 HTML 标签内部。")
-
 (defvar my/web-mode-last-in-tag-p nil "记录上一次光标是否在 HTML 标签内部。")
 
 (defun my/web-mode-in-tag-p ()
