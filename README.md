@@ -571,6 +571,41 @@
 (setenv "DEEPSEEK_API_KEY" (getenv "DEEPSEEK_API_KEY_FROM_ENV"))
 ```
 
+#### copilot.el
+
+项目地址：[copilot.el](https://github.com/copilot-emacs/copilot.el)
+
+和aidermacs那种聊天式的AI文本生成不同，copilot.el更像是生成代码补全，根据当前项目上下文推断可能代码段，然后用户进行补全。
+
+配合lsp-bridge，在emacs上的代码补全功能已经十分不错了。
+
+比较奇怪的一个地方是，我设置了补全缩进为2空格，但是似乎不起作用。
+
+``` elisp
+(add-to-list 'load-path "~/.emacs.d/site-lisp/copilot.el")
+(require 'copilot)
+;;(add-hook 'prog-mode-hook 'copilot-mode)
+(add-hook 'pyton-mode-hook 'copilot-mode)
+(add-hook 'js-mode-hook 'copilot-mode)
+(add-hook 'web-mode-hook 'copilot-mode)
+
+(add-to-list 'copilot-indentation-alist '(prog-mode 2))
+(add-to-list 'copilot-indentation-alist '(web-mode 2))
+(add-to-list 'copilot-indentation-alist '(python-mode 2))
+(add-to-list 'copilot-indentation-alist '(js2-mode 2))
+(add-to-list 'copilot-indentation-alist '(java-mode 2))
+
+;; 全部补全
+(define-key copilot-completion-map (kbd "M-?") 'copilot-accept-completion)
+;; 按字接受 Copilot 补全
+(define-key copilot-completion-map (kbd "M-'") 'copilot-accept-completion-by-word)
+
+(custom-set-faces
+ '(copilot-overlay-face ((t (:foreground "#d3edcf" :background "#406539" :italic t)))))
+
+(provide 'init-copilot)
+```
+
 ### 多种语言针对性配置
 
 #### webmode
