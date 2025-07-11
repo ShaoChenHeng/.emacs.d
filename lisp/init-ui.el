@@ -95,9 +95,7 @@
         '(("lambda" . 955)
           ("delta" . 120517)
           ("epsilon" . 120518)
-          ("->" . 8594)
-          ("<=" . 8804)
-          (">=" . 8805))))
+	  )))
 (add-hook 'prog-mode-hook 'add-pretty-lambda)
 (add-hook 'org-mode-hook 'add-pretty-lambda)
 
