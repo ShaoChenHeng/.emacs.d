@@ -37,11 +37,11 @@
   '(major-mode minor-modes lsp vcs checker misc-info))
 
 ;; set modeline font
-;;(setq doom-modeline-height 15)
+(setq doom-modeline-height 10)
 (if (facep 'mode-line-active)
-    (set-face-attribute 'mode-line-active nil :family "mononoki" :height 170) ; For 29+
-  (set-face-attribute 'mode-line nil :family "mononoki" :height 170))
-(set-face-attribute 'mode-line-inactive nil :family "mononoki" :height 170)
+    (set-face-attribute 'mode-line-active nil :family "mononoki" :height 160) ; For 29+
+  (set-face-attribute 'mode-line nil :family "mononoki" :height 160))
+(set-face-attribute 'mode-line-inactive nil :family "mononoki" :height 160)
 
 (setq doom-modeline-mode-line 'main)
 
