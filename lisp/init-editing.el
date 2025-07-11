@@ -138,8 +138,6 @@
       "gpg"
       (file-name-extension (buffer-name)) t))))
 
-
-
 (add-to-list 'load-path "~/.emacs.d/site-lisp/goto-line-preview")
 (require 'goto-line-preview)
 (global-set-key (kbd "M-g M-g")  'goto-line-preview)
@@ -150,6 +148,13 @@
 ;; use C-= select the whole word
 (require 'expand-region)
 (global-set-key (kbd "M-r") 'er/expand-region)
+
+;; which-ket 提示快捷键
+(use-package which-key
+  :ensure t
+  :config
+  (which-key-setup-side-window-bottom)
+  (setq which-key-idle-delay 1))
 
 ;; Change highlight background color to white
 (set-face-background 'goto-line-preview-hl "#5a94f5")
