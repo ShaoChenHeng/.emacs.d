@@ -5,3 +5,8 @@
 
 ;; (setq url-gateway-local-host-regexp
 ;;      (concat "\\`" (regexp-opt '("localhost" "127.0.0.1")) "\\'"))
+
+(require 'socks)
+(setq url-gateway-method 'socks) ;; 设置 Emacs 的网络请求走 SOCKS
+(setq socks-server '("Clash SOCKS" "127.0.0.1" 7897 5)) ;; 配置 SOCKS5 代理
+(provide 'init-proxy)
