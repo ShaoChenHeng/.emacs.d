@@ -149,6 +149,17 @@
 (require 'expand-region)
 (global-set-key (kbd "M-r") 'er/expand-region)
 
+;; 智能行首跳转
+(defun smart-beginning-of-line ()
+  "切换光标到行首或当前代码头部（第一个非空字符）"
+  (interactive)
+  (let ((oldpos (point)))
+    (beginning-of-line)
+    (when (= oldpos (point))
+      (back-to-indentation))))
+
+(global-set-key (kbd "C-a") 'smart-beginning-of-line)
+
 ;; which-ket 提示快捷键
 (use-package which-key
   :ensure t
@@ -171,8 +182,5 @@
 ;; 快速执行python
 ;; 当前配置有点奇怪，C-c C-c会执行python程序，还需要C-c C-p打开（终端）才能看到结果
 (global-set-key (kbd "C-c C-p") 'run-python)
-
-;; 和输入法启动冲突，所以禁止
-(global-unset-key (kbd "M-/"))
 
 (provide 'init-editing)
