@@ -1,7 +1,6 @@
 (add-to-list 'load-path "~/.emacs.d/site-lisp/copilot.el")
 (require 'copilot)
 ;;(add-hook 'prog-mode-hook 'copilot-mode)
-(add-hook 'pyton-mode-hook 'copilot-mode)
 (add-hook 'js-mode-hook 'copilot-mode)
 (add-hook 'web-mode-hook 'copilot-mode)
 (add-hook 'python-ts-mode-hook 'copilot-mode)
@@ -23,7 +22,7 @@
 (add-to-list 'copilot-indentation-alist '(css-ts-mode 2))
 
 ;; 全部补全
-(define-key copilot-completion-map (kbd "M-?") 'copilot-accept-completion)
+(define-key copilot-completion-map (kbd "M-<return>") 'copilot-accept-completion)
 ;; 按字接受 Copilot 补全
 (define-key copilot-completion-map (kbd "C-<tab>") 'copilot-accept-completion-by-word)
 
