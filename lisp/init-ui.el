@@ -1,8 +1,6 @@
 ;; use monokai
 (add-to-list 'load-path "~/.emacs.d/site-lisp/monokai-emacs")
 (require 'monokai-theme)
-;;(with-eval-after-load 'monokai-theme
-;;  (set-face-attribute 'highlight nil :distant-foreground 'unspecified))
 (load-theme 'monokai t) ;; or (load-theme 'monokai-pro t)
 
 ;; close tool-bar
@@ -32,14 +30,14 @@
   (set-face-attribute 'default nil
                       :family "monego"   ; font name
                       :weight 'regular   ; regular or bold
-                      :height 175)       ; vfont size
+                      :height 160)       ; vfont size
+
 
   ;; 设置中文字体（覆盖CJK字符集）
   (dolist (charset '(kana han cjk-misc bopomofo))
     (set-fontset-font t charset
                       (font-spec :family "LXGW WenKai"   ; 霞鹜文楷
-                                 :size 23))))            ; 中文字号
-
+                                 :size 21))))            ; 中文字号
 ;; highlight org-mode
 (require 'org)
 (setq org-src-fontify-natively t)
@@ -118,9 +116,9 @@
 (setq ring-bell-function 'ignore)
 
 ;; ident-bars
-(add-to-list 'load-path "~/.emacs.d/site-lisp/indent-bars")
-(require 'indent-bars)
-(setq indent-bars-width-frac 0.15)
-(add-hook 'prog-mode-hook 'indent-bars-mode)
+;; (add-to-list 'load-path "~/.emacs.d/site-lisp/indent-bars")
+;; (require 'indent-bars)
+;; (setq indent-bars-width-frac 0.15)
+;; (add-hook 'prog-mode-hook 'indent-bars-mode)
 
 (provide 'init-ui)
