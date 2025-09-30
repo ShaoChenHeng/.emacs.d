@@ -146,8 +146,8 @@
 
 ;; expand-region
 ;; use C-= select the whole word
-(require 'expand-region)
-(global-set-key (kbd "M-r") 'er/expand-region)
+;; (require 'expand-region)
+; (global-set-key (kbd "M-r") 'er/expand-region)
 
 ;; 智能行首跳转
 (defun smart-beginning-of-line ()

@@ -22,14 +22,6 @@
 (global-set-key (kbd "C-c C-l") 'lsp-bridge-toggle-log) ;; 开启/关闭 LSP 日志
 
 
-
-(add-to-list 'lsp-bridge-multi-lang-server-extension-list '(("html") . "html_tailwindcss"))
-(add-to-list 'lsp-bridge-multi-lang-server-extension-list '(("css") . "css_tailwindcss"))
-
-(setq lsp-bridge-lang-server
-      '((javascript-mode . "typescript-language-server")
-        (typescript-mode . "typescript-language-server")))
-
 (setq lsp-bridge-python-lsp-server "pyright")
 (setq lsp-bridge-c-lsp-server "ccls")
 (setq lsp-bridge-xml-lsp-server "lemminx")
@@ -38,6 +30,30 @@
 
 (setq lsp-bridge-org-babel-enable t)
 
+;;(setq lsp-bridge-python-command "")
+(defun my/lsp-bridge-auto-set-python-command ()
+  "为每个项目自动设置 lsp-bridge-python-command，指向项目根下的 .venv/bin/python 或 venv/bin/python。"
+  (when (derived-mode-p 'python-ts-mode)
+    (let* ((project-root
+            (or
+             (when (fboundp 'project-root)
+               (project-root (project-current)))
+             (when (fboundp 'projectile-project-root)
+               (projectile-project-root))
+             (locate-dominating-file default-directory ".git")))
+           (python-path
+            (cl-loop for venv in '(".venv/bin/python" "venv/bin/python" "env/bin/python")
+                     for full-path = (and project-root (expand-file-name venv project-root))
+                     when (and full-path (file-executable-p full-path))
+                     return full-path)))
+      (when python-path
+        (setq-local lsp-bridge-python-command python-path)
+        (message "lsp-bridge-python-command set to: %s" python-path)))))
+
+(add-hook 'python-ts-mode-hook #'my/lsp-bridge-auto-set-python-command)
+(with-eval-after-load 'lsp-bridge
+  (define-key lsp-bridge-mode-map (kbd "M-.") 'lsp-bridge-find-def)
+  (define-key lsp-bridge-mode-map (kbd "M-,") 'lsp-bridge-find-def-return))
 (global-lsp-bridge-mode)
 
 (provide 'init-lsp-bridge)
