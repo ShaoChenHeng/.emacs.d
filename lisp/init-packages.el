@@ -8,12 +8,16 @@
 ;; (setq package-archives
 ;;      '(("gnu"   . "https://elpa.gnu.org/packages/")
 ;;        ("melpa" . "https://melpa.org/packages/")
-;;        ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
-(setq package-archives
-      '(("gnu"   . "http://mirrors.cloud.tencent.com/elpa/gnu/")
-	("tuna" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/")
-	("melpa" . "http://mirrors.cloud.tencent.com/elpa/melpa/")
-	("nongnu" . "http://mirrors.cloud.tencent.com/elpa/nongnu/")))
+;; ;;        ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
+;; (setq package-archives
+;;       '(("gnu"   . "http://mirrors.cloud.tencent.com/elpa/gnu/")
+;; 	("tuna" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/")
+;; 	("melpa" . "http://mirrors.cloud.tencent.com/elpa/melpa/")
+;; 	("nongnu" . "http://mirrors.cloud.tencent.com/elpa/nongnu/")))
+
+(setq package-archives '(;;("melpa" . "https://melpa.org/packages/")
+                         ("gnu" . "https://elpa.gnu.org/packages/")
+                         ("org" . "https://orgmode.org/elpa/")))
 
 ;;(package-initialize) ;; You might already have this line
 
@@ -23,7 +27,7 @@
 ;; ========================================
 (setq package-check-signature nil)
 (require 'package)
-(unless (and (fboundp 'package--initialized) 
+(unless (and (fboundp 'package--initialized)
              package--initialized)
   (package-initialize))
 
@@ -49,7 +53,7 @@
   (setq use-package-expand-minimally t)    ; 加速启动
   (setq use-package-enable-imenu-support t); 支持imenu索引
   (setq use-package-always-demand nil)     ;按照需加载
-  
+
   ;; 仅调试时启用
   (when init-file-debug
     (setq use-package-verbose t)))
