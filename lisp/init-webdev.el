@@ -18,6 +18,8 @@
   ;;一对标签高亮
   (setq web-mode-enable-current-element-highlight t)
   (setq web-mode-enable-current-column-highlight nil)
+  ;; 空格代替tab
+  (setq-default indent-tabs-mode nil)
 )
 
 (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
