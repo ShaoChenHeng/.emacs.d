@@ -1,7 +1,38 @@
 ;; use monokai
 (add-to-list 'load-path "~/.emacs.d/site-lisp/monokai-emacs")
 (require 'monokai-theme)
-(load-theme 'monokai t) ;; or (load-theme 'monokai-pro t)
+(setq  monokai-comments "#7A8599")
+(add-to-list 'load-path "~/.emacs.d/site-lisp/emacs-color-theme-solarized")
+(require 'solarized-theme)
+
+;; 你自己的主题搭配（白天/夜间）
+;;(defvar my/day-theme 'gruvbox)
+(defvar my/day-theme 'solarized)
+(defvar my/night-theme 'monokai)
+
+(defvar my/daytime-start "07:00")
+(defvar my/nighttime-start "19:00")
+
+(defun my/apply-theme (theme)
+  "禁用当前已启用主题，加载指定 THEME。"
+  (mapc #'disable-theme custom-enabled-themes)
+  (load-theme theme t))
+
+(defun my/apply-theme-now-based-on-time ()
+  "根据当前时间立即切换主题。"
+  (let* ((now (string-to-number (format-time-string "%H%M")))
+         (day-start (string-to-number (replace-regexp-in-string ":" "" my/daytime-start)))
+         (night-start (string-to-number (replace-regexp-in-string ":" "" my/nighttime-start))))
+    (if (and (>= now day-start) (< now night-start))
+        (my/apply-theme my/day-theme)
+      (my/apply-theme my/night-theme))))
+
+;; 启动时先选一次
+(my/apply-theme-now-based-on-time)
+
+;; 每天在指定时间切换
+(run-at-time my/daytime-start (* 24 60 60) (lambda () (my/apply-theme my/day-theme)))
+(run-at-time my/nighttime-start (* 24 60 60) (lambda () (my/apply-theme my/night-theme)))
 
 ;; close tool-bar
 ;; close scroll-bar
@@ -30,8 +61,7 @@
   (set-face-attribute 'default nil
                       :family "monego"   ; font name
                       :weight 'regular   ; regular or bold
-                      :height 160)       ; vfont size
-
+                      :height 150)       ; vfont size
 
   ;; 设置中文字体（覆盖CJK字符集）
   (dolist (charset '(kana han cjk-misc bopomofo))
@@ -110,7 +140,6 @@
   (set-face-attribute 'goggles-removed nil :background "#EE365A")
   (setq-default goggles-pulse t) ;; set to nil to disable pulsing
   )
-
 ;; no voice
 ;; 完全禁用声音
 (setq ring-bell-function 'ignore)
