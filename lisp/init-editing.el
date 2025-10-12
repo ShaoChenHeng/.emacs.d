@@ -23,25 +23,6 @@
 ;; yes -> y, no -> n
 (fset 'yes-or-no-p 'y-or-n-p)
 
-;; swap 2-indent or 4-indent
-(defun my-toggle-web-indent ()
-  (interactive)
-  ;; web development
-  (if (or (eq major-mode 'js-mode) (eq major-mode 'js2-mode))
-      (progn
-	(setq js-indent-level (if (= js-indent-level 2) 4 2))
-	(setq js2-basic-offset (if (= js2-basic-offset 2) 4 2))))
-
-  (if (eq major-mode 'web-mode)
-      (progn (setq web-mode-markup-indent-offset (if (= web-mode-markup-indent-offset 2) 4 2))
-	     (setq web-mode-css-indent-offset (if (= web-mode-css-indent-offset 2) 4 2))
-	     (setq web-mode-code-indent-offset (if (= web-mode-code-indent-offset 2) 4 2))))
-  (if (eq major-mode 'css-mode)p
-      (setq css-indent-offset (if (= css-indent-offset 2) 4 2)))
-
-  (setq indent-tabs-mode nil))
-
-
 ;; 默认搜索当前被选中的或者在光标下的字符串
 (defun occur-dwim ()
   "Call `occur' with a sane default."

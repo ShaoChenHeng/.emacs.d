@@ -20,15 +20,38 @@
           (lambda ()
             (setq-local java-ts-mode-indent-offset 2)))
 
-(defun my/python-ts-indent-region-or-tab ()
-  "在选区时整体缩进，否则插入 TAB 或调用缩进。"
-  (interactive)
+;;; --- python-ts-mode: 选区 Tab 右移 / Shift-Tab 左移 ---
+;; 关闭 Python 的缩进猜测，设定全局默认层级为 4
+(setq python-indent-guess-indent-offset nil
+      python-indent-guess-indent-offset-verbose nil)
+(setq-default python-indent-offset 4)
+
+(defun my/python-shift-right (n)
+  "选区：每次右移 python-indent-offset*N 列；无选区：按行缩进行为。保持选区。"
+  (interactive "p")
   (if (use-region-p)
-      (indent-region (region-beginning) (region-end))
+      (let ((deactivate-mark nil))
+        (indent-rigidly (region-beginning) (region-end)
+                        (* n (or python-indent-offset tab-width 4))))
     (indent-for-tab-command)))
 
-(with-eval-after-load 'python-ts-mode
-  (define-key python-ts-mode-map (kbd "TAB") #'my/python-ts-indent-region-or-tab))
+(defun my/python-shift-left (n)
+  "选区：每次左移 python-indent-offset*N 列；无选区：按行缩进行为。保持选区。"
+  (interactive "p")
+  (if (use-region-p)
+      (let ((deactivate-mark nil))
+        (indent-rigidly (region-beginning) (region-end)
+                        (* -1 n (or python-indent-offset tab-width 4))))
+    (indent-for-tab-command)))
+
+(with-eval-after-load 'python
+  (add-hook 'python-ts-mode-hook
+            (lambda ()
+              (setq-local indent-tabs-mode nil
+                          tab-width 4)
+              (define-key python-ts-mode-map (kbd "<tab>")     #'my/python-shift-right)
+              (define-key python-ts-mode-map (kbd "<backtab>") #'my/python-shift-left)
+              (define-key python-ts-mode-map (kbd "S-<tab>")   #'my/python-shift-left))))
 
 ;; treesit- auto END
 
