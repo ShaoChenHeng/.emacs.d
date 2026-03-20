@@ -27,8 +27,47 @@
 (setq lsp-bridge-xml-lsp-server "lemminx")
 
 ;;(setq acm-backend-lsp-block-kind-list '("Variable" "Snippet" "Search Word" "Enum"))
+;; 开启通过悬浮窗显示函数签名
+(setq lsp-bridge-signature-show-function 'lsp-bridge-signature-show-with-frame)
+(setq lsp-bridge-signature-show-with-frame-position "top-right")
+(setq lsp-bridge-signature-delay 0.5)
+
 
 (setq lsp-bridge-org-babel-enable t)
+
+;; ACM 补全菜单基础设置
+(setq acm-enable-doc-markdown-render t)
+(setq acm-enable-icon t)
+(with-eval-after-load 'acm
+  ;; 1. 补全框整体默认样式：继承 Emacs 原生的 `tooltip`（工具提示）或 `default`
+  (when (facep 'acm-default-face)
+    (set-face-attribute 'acm-default-face nil
+                        :background 'unspecified
+                        :foreground 'unspecified
+                        :inherit 'tooltip))
+
+  ;; 2. 当前选中项：继承 Emacs 原生的 `highlight` 或 `region`
+  (when (facep 'acm-select-face)
+    (set-face-attribute 'acm-select-face nil
+                        :background 'unspecified
+                        :foreground 'unspecified
+                        :inherit 'highlight
+                        :weight 'bold))
+
+  ;; 3. 输入匹配的高亮字符：继承 Emacs 原生的 `match`（搜索匹配色）
+  (when (facep 'acm-search-match-face)
+    (set-face-attribute 'acm-search-match-face nil
+                        :foreground 'unspecified
+                        :background 'unspecified
+                        :inherit 'match
+                        :weight 'bold))
+
+  ;; 4. 旁边弹出的文档悬浮窗文字内容：继承 `tooltip`
+  (when (facep 'acm-documentation-content-face)
+    (set-face-attribute 'acm-documentation-content-face nil
+                        :background 'unspecified
+                        :foreground 'unspecified
+                        :inherit 'tooltip)))
 
 (with-eval-after-load 'lsp-bridge-ref
   ;; 1. 文件路径：继承「关键字」(keyword)
