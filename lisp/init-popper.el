@@ -10,6 +10,9 @@
 	"\\*Backtrace\\*"
 	"\\*Warnings\\*"
 	"\\*Python\\*"
+	"\\*lsp-bridge-ref\\*"
+	"\\*lsp-bridge-diagnostic\\*"
+	"\\*color-rg\\*" 
         help-mode
         compilation-mode))
 
