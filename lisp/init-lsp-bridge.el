@@ -35,6 +35,9 @@
 
 (setq lsp-bridge-org-babel-enable t)
 
+;; 不破坏窗口排列
+(setq lsp-bridge-ref-delete-other-windows nil)
+
 ;; ACM 补全菜单基础设置
 (setq acm-enable-doc-markdown-render t)
 (setq acm-enable-icon t)
@@ -121,6 +124,20 @@
   (define-key lsp-bridge-mode-map (kbd "C-c a") 'lsp-bridge-code-action)
   ;; 重启 LSP 进程 (当增加依赖或 Lsp 卡死时，一键重启，非常实用)
   (define-key lsp-bridge-mode-map (kbd "C-c C-r") 'lsp-bridge-restart-process))
-(global-lsp-bridge-mode)
+
+;; 1. Emacs Lisp (lsp-bridge 对 elisp 有原生的极速补全支持，无需外部 Server)
+(add-hook 'emacs-lisp-mode-hook #'lsp-bridge-mode)
+
+;; 2. Tree-sitter 模式 (Emacs 29+ 原生 ts 模式)
+(add-hook 'python-ts-mode-hook #'lsp-bridge-mode)
+(add-hook 'c-ts-mode-hook #'lsp-bridge-mode)
+(add-hook 'c++-ts-mode-hook #'lsp-bridge-mode)
+(add-hook 'bash-ts-mode-hook #'lsp-bridge-mode)
+
+;; 3. 传统模式 (为了防止没有启用 ts-mode 时有一个 Fallback)
+(add-hook 'python-mode-hook #'lsp-bridge-mode)
+(add-hook 'c-mode-hook #'lsp-bridge-mode)
+(add-hook 'c++-mode-hook #'lsp-bridge-mode)
+(add-hook 'sh-mode-hook #'lsp-bridge-mode)
 
 (provide 'init-lsp-bridge)
