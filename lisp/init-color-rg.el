@@ -9,6 +9,15 @@
 (global-set-key (kbd "C-c s d") 'color-rg-search-input-in-current-file) ; 仅在当前文件内搜索
 (global-set-key (kbd "C-c s f") 'color-rg-search-input-in-dir)          ; 选择一个特定文件夹进去搜索
 
+(add-to-list 'display-buffer-alist
+             '("\\*color-rg\\*"
+               (display-buffer-reuse-window display-buffer-below-selected)
+               ;; 调整这里的高度：
+               ;; 0.5 代表占据当前窗口的 50% 高度（推荐，你可以改成 0.6 等比例）
+               ;; 如果你想固定行数，可以写成具体的数字，比如 (window-height . 30)
+               (window-height . 0.4)
+               (inhibit-same-window . t)))
+
 ;; --- 自动适配主题的完美配色 ---
 (with-eval-after-load 'color-rg
   ;; 1. 文件路径：继承「关键字」
